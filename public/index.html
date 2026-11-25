@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070b16">
+<meta name="description" content="NOVA AI — универсальный ИИ-помощник">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<title>NOVA AI</title>
+<style>
+:root{--bg:#070b16;--panel:#0d1729;--panel2:#111f35;--line:#203653;--cyan:#48d9ff;--blue:#477cff;--muted:#91a4c2;--white:#eef7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#102b4a 0,transparent 35%),radial-gradient(ellipse at 90% 90%,#102044 0,transparent 35%),var(--bg);color:var(--white);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{cursor:pointer;color:inherit}.app{display:grid;grid-template-columns:255px 1fr;min-height:100vh;max-width:1500px;margin:auto}
+aside{padding:19px 14px;border-right:1px solid var(--line);background:#080e1bdc;display:flex;flex-direction:column;gap:17px}.brand{display:flex;align-items:center;gap:11px;padding:4px 7px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#04101f;font-weight:950;font-size:22px;box-shadow:0 0 25px #36caff55}.brand strong{font-size:19px;letter-spacing:1.4px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.8px}
+.newchat,.primary{border:1px solid #28638c;background:linear-gradient(100deg,#123653,#102443);color:#e6faff;padding:11px 12px;border-radius:11px;text-align:left;font-weight:700}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:10px;background:transparent;border:1px solid transparent;color:#b7c8df;padding:9px 10px;border-radius:10px;text-align:left}.nav button:hover,.nav button.active{background:#12233a;border-color:#24486b;color:#fff}.ico{width:22px;text-align:center}
+.side-note{margin-top:auto;border:1px solid var(--line);background:#0c1628;border-radius:12px;padding:12px;color:var(--muted);font-size:11px}.side-note b{color:#dceeff;display:block}
+main{display:flex;flex-direction:column;min-width:0}.topbar{height:65px;padding:0 27px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#080e1b99}.status{color:#9ddfff;font-size:11px;display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:#48e3b2;box-shadow:0 0 10px #48e3b2}
+.content{width:min(920px,100%);margin:0 auto;padding:27px 25px;flex:1;display:flex;flex-direction:column}.welcome{text-align:center;margin:24px auto 23px;max-width:650px}.orb{width:76px;height:76px;margin:0 auto 15px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#b4f4ff,#32b8f5 28%,#1555ad 68%,#07162f);box-shadow:0 0 35px #29bfff66,inset 0 0 18px #c8f7ff88;color:#06142a;font-size:33px;font-weight:900}.welcome h1{font-size:clamp(27px,5vw,39px);margin:0 0 7px}.gradient{background:linear-gradient(90deg,#e9fbff,#58d7ff,#7b9cff);-webkit-background-clip:text;background-clip:text;color:transparent}.welcome p,.muted{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:10px 0 22px}.module{border:1px solid var(--line);background:linear-gradient(145deg,#111e33,#0b1425);border-radius:14px;padding:14px;text-align:left;transition:.2s}.module:hover{border-color:#3a9ac8;transform:translateY(-2px);box-shadow:0 8px 25px #168bd322}.module .micon{font-size:21px;margin-bottom:6px}.module b{display:block;margin-bottom:2px}.module small{color:var(--muted)}
+.chat{display:flex;flex-direction:column;gap:12px;margin:4px 0 17px}.msg{max-width:88%;padding:12px 15px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere}.msg.user{align-self:flex-end;background:linear-gradient(120deg,#174e79,#173b70);border:1px solid #2c6d9d}.msg.bot{align-self:flex-start;background:#101b2d;border:1px solid #223650}.who{font-size:10px;letter-spacing:1px;color:#8edfff;margin-bottom:4px}
+.composer{position:sticky;bottom:10px;background:#0d1729;border:1px solid #29415f;border-radius:16px;padding:9px;box-shadow:0 10px 35px #0007}.compose-row{display:flex;gap:8px;align-items:flex-end}.composer textarea{resize:vertical;min-height:45px;max-height:140px;flex:1;background:transparent;color:var(--white);border:0;outline:0;padding:10px}.composer textarea::placeholder{color:#7185a3}.send{border:0;border-radius:11px;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#061326;font-weight:900;padding:11px 16px}.hint{text-align:center;color:#6f829f;font-size:10px;margin-top:6px}
+.page{display:none}.page.active{display:block}.page h2{margin:5px 0}.sub{color:var(--muted);margin:0 0 18px}.setting{padding:15px;border:1px solid var(--line);border-radius:13px;background:#0d1729;margin:11px 0}.setting label{display:block;font-size:13px;color:#a9bfdc;margin-bottom:7px}.setting input,.setting select,.setting textarea{width:100%;background:#081222;color:white;border:1px solid #29415f;border-radius:9px;padding:10px;outline:none}.primary{display:inline-block;text-align:center;border:0;color:#061326;background:linear-gradient(120deg,var(--cyan),var(--blue));padding:10px 15px}.task{display:flex;gap:9px;align-items:center;margin:9px 0}.task span{flex:1}.task button{background:transparent;border:0;color:#ff9caa}.history-item{display:flex;justify-content:space-between;gap:10px;padding:10px;border-bottom:1px solid var(--line);color:#c6d9f1}.history-item button{background:transparent;border:0;color:#8edfff}
+@media(max-width:740px){.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:10px;gap:9px}.brand .logo{width:35px;height:35px}.newchat{padding:8px}.nav{display:flex;overflow:auto;gap:4px}.nav button{white-space:nowrap;padding:7px 9px;font-size:11px}.side-note{display:none}.topbar{height:50px;padding:0 15px}.content{padding:19px 13px}.welcome{margin:13px auto 17px}.cards{gap:8px}.module{padding:12px}.msg{max-width:95%}}
+@media(max-width:370px){.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+ <div class="brand"><div class="logo">N</div><div><strong>NOVA AI</strong><small>UNIVERSAL ASSISTANT</small></div></div>
+ <button class="newchat" id="newChat">＋ Новый чат</button>
+ <nav class="nav">
+  <button class="active" data-page="chat">✦ Главная / Чат</button>
+  <button data-page="study">📚 Учёба</button><button data-page="ideas">💡 Идеи</button>
+  <button data-page="code">⌘ Код</button><button data-page="logic">🧩 Логика</button>
+  <button data-page="planner">🗓 Планировщик</button><button data-page="translate">🌐 Переводчик</button>
+  <button data-page="texts">✎ Тексты</button><button data-page="history">◷ История</button><button data-page="settings">⚙ Настройки</button>
+ </nav>
+ <div class="side-note"><b>◈ NOVA AI</b>Личный универсальный помощник. История чатов хранится на этом устройстве.</div>
+</aside>
+<main>
+ <header class="topbar"><b id="topTitle">Главная</b><div class="status"><span class="dot"></span> NOVA готова</div></header>
+ <div class="content">
+  <section class="page active" id="page-chat">
+   <div class="welcome" id="welcome"><div class="orb">N</div><h1>Привет! Я <span class="gradient">NOVA AI</span></h1><p>Твой универсальный помощник. С чего начнём?</p></div>
+   <div class="cards" id="moduleCards">
+    <button class="module" data-prompt="Помоги разобраться с домашним заданием. Объясняй по шагам."><div class="micon">📚</div><b>Учёба</b><small>Понятные объяснения</small></button>
+    <button class="module" data-prompt="Предложи интересные идеи для моего проекта."><div class="micon">💡</div><b>Генератор идей</b><small>Новые задумки</small></button>
+    <button class="module" data-prompt="Помоги написать или исправить код."><div class="micon">⌘</div><b>Программирование</b><small>Сайты и приложения</small></button>
+    <button class="module" data-prompt="Задай логическую загадку средней сложности, не показывай ответ сразу."><div class="micon">🧩</div><b>Логика и загадки</b><small>Тренировка мышления</small></button>
+    <button class="module" data-prompt="Помоги составить реалистичный план моих задач на сегодня."><div class="micon">🗓</div><b>Планировщик</b><small>Порядок в делах</small></button>
+    <button class="module" data-prompt="Помоги перевести текст. Сначала уточни язык, если он не указан."><div class="micon">🌐</div><b>Переводчик</b><small>Работа с языками</small></button>
+   </div>
+   <div class="chat" id="chatMessages" aria-live="polite"></div>
+   <div class="composer"><div class="compose-row"><textarea id="messageInput" rows="1" placeholder="Напиши сообщение NOVA..."></textarea><button class="send" id="sendBtn">➤</button></div><div class="hint">Enter — отправить · Shift + Enter — новая строка</div></div>
+  </section>
+  <section class="page" id="page-study"><h2>📚 Учёба</h2><p class="sub">Объяснения, задачи и подготовка к урокам.</p><button class="primary" data-prompt="Помоги мне разобраться с темой. Объясняй просто, по одному шагу за раз.">Начать занятие</button></section>
+  <section class="page" id="page-ideas"><h2>💡 Генератор идей</h2><p class="sub">Идеи для проектов, творчества и новых начинаний.</p><button class="primary" data-prompt="Предложи 7 необычных идей для моего проекта, с коротким описанием каждой.">Сгенерировать идеи</button></section>
+  <section class="page" id="page-code"><h2>⌘ Программирование</h2><p class="sub">Создание сайтов, приложений и помощь с кодом.</p><button class="primary" data-prompt="Помоги создать приложение. Сначала уточни цель, затем веди меня по шагам и объясняй код новичку.">Начать разработку</button></section>
+  <section class="page" id="page-logic"><h2>🧩 Логика и загадки</h2><p class="sub">Загадки с постепенным повышением сложности.</p><button class="primary" data-prompt="Дай одну интересную логическую загадку средней сложности. Не показывай ответ, пока я не попрошу.">Получить загадку</button></section>
+  <section class="page" id="page-planner"><h2>🗓 Планировщик задач</h2><p class="sub">Локальный список задач на этом устройстве.</p><div class="setting"><label>Новая задача</label><input id="taskInput" placeholder="Например: закончить домашнее задание"><button class="primary" id="addTask" style="margin-top:9px">Добавить</button><div id="taskList"></div></div></section>
+  <section class="page" id="page-translate"><h2>🌐 Переводчик</h2><p class="sub">Отправь текст в чат NOVA и укажи нужный язык.</p><div class="setting"><label>Текст</label><textarea id="translateText" rows="5" placeholder="Введи текст..."></textarea><label style="margin-top:10px">Язык перевода</label><select id="targetLang"><option>Английский</option><option>Русский</option><option>Казахский</option><option>Немецкий</option><option>Французский</option></select><button class="primary" id="translateBtn" style="margin-top:10px">Перевести через NOVA</button></div></section>
+  <section class="page" id="page-texts"><h2>✎ Помощник по текстам</h2><p class="sub">Черновики, редактирование и улучшение формулировок.</p><button class="primary" data-prompt="Помоги улучшить мой текст, сохранив смысл и мой стиль. Сначала попроси меня прислать текст.">Работать с текстом</button></section>
+  <section class="page" id="page-history"><h2>◷ История чатов</h2><p class="sub">Последние сообщения, сохранённые на этом устройстве.</p><div class="setting" id="historyList"></div><button class="primary" id="clearHistory">Очистить историю</button></section>
+  <section class="page" id="page-settings"><h2>⚙ Настройки</h2><p class="sub">Настрой характер и стиль ответов NOVA.</p><div class="setting"><label>Имя помощника</label><input id="assistantName" value="NOVA AI"></div><div class="setting"><label>Характер</label><select id="assistantStyle"><option>Серьёзный аналитик</option><option>Дружелюбный наставник</option><option>Креативный исследователь</option></select></div><div class="setting"><label>Стиль ответов</label><select id="responseStyle"><option>Кратко и по делу</option><option>Подробно и с примерами</option><option>Пошагово и просто</option></select></div><button class="primary" id="saveSettings">Сохранить настройки</button><p id="saveNote" class="muted"></p><p class="muted" style="font-size:12px">Для работы настоящего ИИ сервер должен быть запущен и настроен взрослым владельцем проекта. Не вставляй секретный API-ключ в приложение.</p></section>
+ </div>
+</main>
+</div>
+<script>
+const titles={chat:'Главная',study:'Учёба',ideas:'Генератор идей',code:'Программирование',logic:'Логика и загадки',planner:'Планировщик',translate:'Переводчик',texts:'Помощник по текстам',history:'История чатов',settings:'Настройки'};
+const nav=[...document.querySelectorAll('.nav button')], chat=document.getElementById('chatMessages');
+let messages=[];
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+function showPage(n){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+n));nav.forEach(b=>b.classList.toggle('active',b.dataset.page===n));document.getElementById('topTitle').textContent=titles[n]||'NOVA AI';if(n==='history')renderHistory()}
+nav.forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function drawMessage(text,role){const el=document.createElement('div');el.className='msg '+role;const who=document.createElement('div');who.className='who';who.textContent=role==='user'?'ВЫ':(document.getElementById('assistantName').value||'NOVA AI').toUpperCase();const body=document.createElement('div');body.textContent=text;el.append(who,body);chat.append(el);el.scrollIntoView({behavior:'smooth',block:'nearest'});return body}
+function saveHistory(){localStorage.setItem('nova_history',JSON.stringify(messages.slice(-100)))}
+async function send(text){const input=document.getElementById('messageInput'),value=(text??input.value).trim();if(!value)return;document.getElementById('welcome').style.display='none';document.getElementById('moduleCards').style.display='none';input.value='';messages.push({role:'user',text:value,time:Date.now()});drawMessage(value,'user');const answer=drawMessage('NOVA обрабатывает запрос…','bot');try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:value,history:messages.slice(-12),assistantName:document.getElementById('assistantName').value,assistantStyle:document.getElementById('assistantStyle').value,responseStyle:document.getElementById('responseStyle').value})});const data=await r.json();if(!r.ok)throw Error(data.error||'Ошибка сервера');answer.textContent=data.reply;messages.push({role:'assistant',text:data.reply,time:Date.now()})}catch(e){answer.textContent='Не удалось получить ответ ИИ. '+e.message;messages.push({role:'assistant',text:answer.textContent,time:Date.now()})}saveHistory()}
+document.getElementById('sendBtn').onclick=()=>send();document.getElementById('messageInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}});
+document.getElementById('newChat').onclick=()=>{messages=[];chat.innerHTML='';document.getElementById('welcome').style.display='block';document.getElementById('moduleCards').style.display='grid';showPage('chat');saveHistory()};
+document.querySelectorAll('[data-prompt]').forEach(b=>b.addEventListener('click',()=>{showPage('chat');send(b.dataset.prompt)}));
+document.getElementById('saveSettings').onclick=()=>{localStorage.setItem('nova_settings',JSON.stringify({name:assistantName.value,style:assistantStyle.value,response:responseStyle.value}));document.querySelector('.brand strong').textContent=assistantName.value||'NOVA AI';document.getElementById('saveNote').textContent='Настройки сохранены на этом устройстве.'};
+const saved=get('nova_settings',null);if(saved){assistantName.value=saved.name||'NOVA AI';assistantStyle.value=saved.style||assistantStyle.value;responseStyle.value=saved.response||responseStyle.value;document.querySelector('.brand strong').textContent=assistantName.value}
+let tasks=get('nova_tasks',[]);function renderTasks(){const box=document.getElementById('taskList');box.innerHTML='';tasks.forEach((t,i)=>{const row=document.createElement('div');row.className='task';const cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;const s=document.createElement('span');s.textContent=t.text;s.style.textDecoration=t.done?'line-through':'none';cb.onchange=()=>{tasks[i].done=cb.checked;localStorage.setItem('nova_tasks',JSON.stringify(tasks));renderTasks()};const del=document.createElement('button');del.textContent='Удалить';del.onclick=()=>{tasks.splice(i,1);localStorage.setItem('nova_tasks',JSON.stringify(tasks));renderTasks()};row.append(cb,s,del);box.append(row)})}renderTasks();
+document.getElementById('addTask').onclick=()=>{const f=document.getElementById('taskInput'),v=f.value.trim();if(!v)return;tasks.push({text:v,done:false});localStorage.setItem('nova_tasks',JSON.stringify(tasks));f.value='';renderTasks()};
+document.getElementById('translateBtn').onclick=()=>{const t=translateText.value.trim();if(t){showPage('chat');send('Переведи на '+targetLang.value+': '+t)}};
+function renderHistory(){const box=document.getElementById('historyList');box.innerHTML='';if(!messages.length){box.textContent='Пока нет сообщений в этой сессии.';return}messages.slice().reverse().forEach(m=>{const row=document.createElement('div');row.className='history-item';const s=document.createElement('span');s.textContent=(m.role==='user'?'Вы: ':'NOVA: ')+m.text.slice(0,110);row.append(s);box.append(row)})}
+document.getElementById('clearHistory').onclick=()=>{messages=[];chat.innerHTML='';saveHistory();renderHistory()};
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('/sw.js').catch(()=>{});
+</script>
+</body></html>
