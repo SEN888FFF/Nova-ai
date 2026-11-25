@@ -1,3 +1,4 @@
+
 name: Build NOVA AI APK
 
 on:
@@ -8,39 +9,52 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
 
     steps:
-      - name: Download project
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Accept Android licenses
+        run: |
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | sort | tail -n 1)"
+          yes | "$SDKMANAGER" --licenses
+
+      - name: Install Android SDK packages
+        run: |
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | sort | tail -n 1)"
+          "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Install dependencies
         run: npm install
 
-      - name: Add Android platform
+      - name: Add Android
         run: npx cap add android
 
       - name: Sync Android
         run: npx cap sync android
 
       - name: Build APK
-        run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: NOVA-AI-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          
