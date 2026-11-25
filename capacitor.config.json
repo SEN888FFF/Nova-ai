@@ -1,0 +1,8 @@
+{
+  "appId": "com.novaai.assistant",
+  "appName": "NOVA AI",
+  "webDir": "public",
+  "server": {
+    "androidScheme": "https"
+  }
+}
